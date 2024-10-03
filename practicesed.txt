@@ -1,0 +1,370 @@
+~/sed$cat data
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$sed -n '3p' data
+2 Bont 45000 Belgium
+~/sed$sed -n '$p' data
+4 Hina 35000 India
+~/sed$sed -n '3,5p' data
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$sed -n '2,4p' data
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+~/sed$sed -n '/India/p' data
+1 Pol 2500 India
+4 Hina 35000 India
+~/sed$sed -n -e '2p' -e '4p' data
+1 Pol 2500 India
+3 Loki 55000 Germany
+~/sed$sed -n -e '/India/p' -e '/Germany/p' data
+1 Pol 2500 India
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$sed -n '2,+2p' data
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+
+~/sed$sed -n '1~2p' data
+ID Name Salary Country
+2 Bont 45000 Belgium
+4 Hina 35000 India
+
+~/sed$cat ex_file
+1p
+3p
+5p
+
+~/sed$ sed -f ex_file data
+ID Name Salary Country
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+4 Hina 35000 India
+~/sed$sed -n -f ex_file data
+ID Name Salary Country
+2 Bont 45000 Belgium
+4 Hina 35000 India
+
+
+~/sed$cat data
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$sed 's/Pol/Paul/g' data
+ID Name Salary Country
+1 Paul 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$sed 's/India/US/g' data
+ID Name Salary Country
+1 Pol 2500 US
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 US
+~/sed$sed '2 s/India/US/g' data
+ID Name Salary Country
+1 Pol 2500 US
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+
+
+~/sed$cat data
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$sed '2! s/India/US/g' data
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 US
+
+
+~/sed$cat data
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 US
+~/sed$sed '/Pol/ s/2500/85000/g' data
+ID Name Salary Country
+1 Pol 85000 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 US
+~/sed$sed '1d' data
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 US
+~/sed$sed '$d' data
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+
+~/sed$sed '2,4d' data
+ID Name Salary Country
+4 Hina 35000 US
+
+~/sed$cat data
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 US
+~/sed$sed '/Belgium/d' data
+ID Name Salary Country
+1 Pol 2500 India
+3 Loki 55000 Germany
+4 Hina 35000 US
+
+
+~/sed$cat data
+ID Name Salary Country
+1 Pol 2500 India
+
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 US
+~/sed$sed '/^$/d' data
+ID Name Salary Country
+1 Pol 2500 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 US
+
+
+~/sed$sed -i '/^$/d' data
+
+~/sed$cat data
+ID Name Salary Country
+1 Pol 25000 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$sed '/India/ w IndianUsers' data
+ID Name Salary Country
+1 Pol 25000 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$ls
+data  ex_file  IndianUsers  sedcommands.txt
+~/sed$cat IndianUsers
+1 Pol 25000 India
+4 Hina 35000 India
+
+
+~/sed$cat data
+ID Name Salary Country
+1 Pol 25000 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+~/sed$sed '3 a Hello User' data
+ID Name Salary Country
+1 Pol 25000 India
+2 Bont 45000 Belgium
+Hello User
+3 Loki 55000 Germany
+4 Hina 35000 India
+
+
+~/sed$sed '/Loki/ a Hello User' data
+ID Name Salary Country
+1 Pol 25000 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+Hello User
+4 Hina 35000 India
+
+~/sed$sed '4 c Hello User' data
+ID Name Salary Country
+1 Pol 25000 India
+2 Bont 45000 Belgium
+Hello User
+4 Hina 35000 India
+
+
+~/sed$sed '1 i Hello User' data
+Hello User
+ID Name Salary Country
+1 Pol 25000 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+
+
+~/sed$sed -n 'l' data
+ID Name Salary Country$
+1 Pol 25000 India$
+2 Bont 45000 Belgium$
+3 Loki 55000 Germany$
+4 Hina 35000 India$
+
+~/sed$sed -n 'l 20' data
+ID Name Salary Coun\
+try$
+1 Pol 25000 India$
+2 Bont 45000 Belgiu\
+m$
+3 Loki 55000 German\
+y$
+4 Hina 35000 India$
+
+
+~/sed$nano externalfile
+~/sed$cat externalfile
+Hello user this is from external file
+~/sed$sed '3 r externalfile' data
+ID Name Salary Country
+1 Pol 25000 India
+2 Bont 45000 Belgium
+Hello user this is from external file
+3 Loki 55000 Germany
+4 Hina 35000 India
+
+~/sed$sed '/India/ q' data
+ID Name Salary Country
+1 Pol 25000 India
+
+~/sed$date
+Thu Oct  3 08:35:04 AM IST 2024
+~/sed$sed '2 e date' data
+ID Name Salary Country
+Thu Oct  3 08:35:33 AM IST 2024
+1 Pol 25000 India
+2 Bont 45000 Belgium
+3 Loki 55000 Germany
+4 Hina 35000 India
+
+
+~/sed$sed '=' data
+1
+ID Name Salary Country
+2
+1 Pol 25000 India
+3
+2 Bont 45000 Belgium
+4
+3 Loki 55000 Germany
+5
+4 Hina 35000 India
+
+~/sed$cat names
+firstname
+Kara-Lynn
+Correy
+Theodora
+Rosaline
+Ezmeralda
+Janenna
+Alie
+Jaime
+Georgina
+Karolina
+Selma
+Eugine
+Brandise
+Valera
+Violet
+Ann-Marie
+Brietta
+Concettina
+Rivalee
+Julieta
+
+
+~/sed$sed -n '/^V/p' names
+Valera
+Violet
+
+~/sed$sed -n '/a$/p' names
+Theodora
+Ezmeralda
+Janenna
+Georgina
+Karolina
+Selma
+Valera
+Brietta
+Concettina
+Julieta
+
+
+~/sed$sed -n '/[AC]/p' names
+Correy
+Alie
+Ann-Marie
+Concettina
+
+
+~/sed$sed -n '/[A-D]/p' names
+Correy
+Alie
+Brandise
+Ann-Marie
+Brietta
+Concettina
+
+
+~/sed$nano posix
+~/sed$cat posix
+HELLO
+WORLD
+like
+subscribe
+12345
+890
+ABCD12345
+Hello World
+Hello, World!
+
+~/sed$sed -n '/[[:digit:]]/p' posix
+12345
+890
+ABCD12345
+
+~/sed$sed -n '/[[:upper:]]/p' posix
+HELLO
+WORLD
+ABCD12345
+Hello World
+Hello, World!
+~/sed$sed -n '/[[:lower:]]/p' posix
+like
+subscribe
+Hello World
+Hello, World!
+~/sed$sed -n '/[[:space:]]/p' posix
+Hello World
+Hello, World!
+~/sed$sed -n '/[[:punct:]]/p' posix
+Hello, World!
+
+
+~/sed$sed -n '/[[:alpha:]]/p' posix
+HELLO
+WORLD
+like
+subscribe
+ABCD12345
+Hello World
+Hello, World!
